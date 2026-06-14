@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  < meta charset="UTF-8"
+  <title>Cart</title>
+</head>
+<body style="padding:20px; font-family:sans-serif; background:#0c0c0c;">
+  
+  <a href="/dashboard" style="display:inline-block; margin-bottom:20px; padding:8px 16px; background:#333; color:white; text-decoration:none; border-radius:4px;">
+    ← Back to Dashboard
+  </a>
+
+  <div style="max-width:600px; margin:0 auto; text-align:center;">
+    <h2 style="color:#fffdfd; margin-bottom:20px;">Your Cart</h2>
+    
+    <div id="cart-items" style="background:white; padding:20px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); min-height:100px;">
+    </div>
+  </div>
+
+  <script>
+    function loadCart(){
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const container = document.getElementById('cart-items');
+      
+      if(cart.length === 0){
+        container.innerHTML = "<p style='color:#666; padding:20px;'>Cart is empty</p>";
+        return;
+      }
+
+      let total = 0;
+      container.innerHTML = "";
+      
+      cart.forEach((item, index) => {
+        container.innerHTML += `
+          <div style="border-bottom:1px solid #eee; padding:12px 0; text-align:left; font-size:16px;">
+            <strong>${item.name}</strong> 
+            <span style="float:right; color:#333;">$${item.price.toFixed(2)}</span>
+            <button onclick="removeItem(${index})" style="margin-left:10px; padding:2px 8px; background:red; color:white; border:none; border-radius:4px; cursor:pointer;">X</button>
+          </div>
+        `;
+        total += item.price;
+      });
+      
+      container.innerHTML += `
+        <div style="padding-top:15px; text-align:right; font-size:18px; color:#333;">
+          <strong>Total: $${total.toFixed(2)}</strong>
+        </div>
+        <div style="text-align:right; margin-top:20px;">
+          <button onclick="PLACE ORDER()" style="padding:12px 24px; background:green; color:white; border:none; border-radius:6px; cursor:pointer; font-size:16px;">
+            PLACE ORDER
+          </button>
+        </div>
+      `;
+    }
+
+    function removeItem(index){
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      loadCart();
+    }
+
+    async function checkout(){
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cart.length === 0) return;
+      
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      
+      const res = await fetch('/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: cart, total: total })
+      });
+      
+      const data = await res.json();
+      
+      localStorage.removeItem('cart');
+      window.dispatchEvent(new Event('storage'));
+      
+      document.getElementById('cart-items').innerHTML = `
+        <div style="padding:30px; color:green; font-size:18px;">
+          ✅ Order placed successfully!
+          <div style="font-size:14px; color:#666; margin-top:8px;">Order #: ${data.orderId}</div>
+          <br>
+          <a href="/dashboard" style="color:#333; text-decoration:underline;">Continue Shopping</a>
+        </div>
+      `;
+    }
+
+    loadCart();
+  </script>
+</body>
+</html>

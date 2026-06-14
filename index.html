@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - Arewa Herbal Mix</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', Arial, sans-serif;
+}
+
+body{
+  background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80') no-repeat center fixed;
+  background-size: cover;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.login-box{
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(20px);
+  padding:45px 40px;
+  border-radius:20px;
+  width:100%;
+  max-width:360px;
+  border: 2px solid rgba(255,255,255,0.3);
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+  color:#fff;
+}
+
+h2{
+  text-align:center;
+  color:#fff;
+  margin-bottom:35px;
+  font-size:34px;
+  font-weight:700;
+}
+
+.input-group{
+  margin-bottom:25px;
+  position:relative;
+  border-bottom:2px solid rgba(255,255,255,0.5);
+}
+
+.input-group i{
+  position:absolute;
+  right:5px;
+  top:12px;
+  color:rgba(255,255,255,0.8);
+  font-size:18px;
+}
+
+.input-group input{
+  width:100%;
+  padding:14px 35px 14px 5px;
+  border:none;
+  outline:none;
+  background:transparent;
+  font-size:16px;
+  color:#fff;
+}
+
+.input-group input::placeholder{
+  color:rgba(255,255,255,0.7);
+}
+
+.btn{
+  width:100%;
+  padding:15px;
+  background:#22c55e;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+  transition:0.3s;
+  margin-top:10px;
+}
+
+.btn:hover{
+  background:#16a34a;
+  transform:scale(1.03);
+}
+</style>
+</head>
+<body>
+
+<div class="login-box">
+  <h2>Login</h2>
+  
+  <form id="loginForm">
+    <div class="input-group">
+      <i class="fa-solid fa-user"></i>
+      <input type="text" id="username" placeholder="Username" required>
+    </div>
+    
+    <div class="input-group">
+      <i class="fa-solid fa-lock"></i>
+      <input type="password" id="password" placeholder="Password" required>
+    </div>
+    
+    <button type="submit" class="btn">Login</button>
+  </form>
+</div>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  
+  if(username === '' || password === ''){
+    alert('Please enter username and password');
+    return;
+  }
+  
+  // Save username and go to dashboard
+  localStorage.setItem('user', username);
+  window.location.href = `dashboard.html?user=${encodeURIComponent(username)}`;
+});
+</script>
+
+</body>
+</html>

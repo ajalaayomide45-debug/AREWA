@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop - Arewa Herbal Mix</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', Arial, sans-serif;
+}
+
+body{
+  background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1920&q=80') no-repeat center fixed;
+  background-size: cover;
+  min-height:100vh;
+}
+
+
+.header{
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(20px);
+  color:#fff;
+  padding:18px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:15px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
+}
+
+nav{
+  display:flex;
+  gap:25px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+nav div{
+  cursor:pointer;
+  font-size:16px;
+  font-weight:600;
+  color:#fff;
+  position:relative;
+}
+
+nav div:hover{
+  color:#ffeb3d;
+}
+
+.cart-count{
+  position:absolute;
+  top:-8px;
+  right:-12px;
+  background:#ff444d;
+  color:#fff;
+  border-radius:50%;
+  width:20px;
+  height:20px;
+  font-size:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.welcome{
+  font-size:14px;
+  background:rgba(255,255,255,0.25);
+  padding:8px 16px;
+  border-radius:25px;
+  font-weight:700;
+  border:1px solid rgba(255,255,255,0.4);
+}
+
+.container{
+  padding:50px 5%;
+}
+
+h2{
+  color:#fff;
+  text-shadow: 2px 2px 15px rgba(0,0,0,0.9);
+  margin-bottom:40px;
+  font-size:36px;
+  text-align:center;
+  font-weight:700;
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:30px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.product-card{
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  border-radius:18px;
+  overflow:hidden;
+  border: 2px solid rgba(255,255,255,0.3);
+  color:#fff;
+}
+
+.product-card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+
+.product-card h3{
+  padding:18px 18px 8px;
+  font-size:20px;
+  font-weight:700;
+}
+
+.product-card .price{
+  padding:0 18px;
+  color:#ffeb3d;
+  font-weight:800;
+  font-size:28px;
+  margin-bottom:15px;
+}
+
+.btn-group{
+  display:flex;
+  gap:10px;
+  padding:0 18px 18px;
+}
+
+.btn{
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.btn-details{
+  background:rgba(80,80,80,0.8);
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.3);
+}
+
+.btn-cart{
+  background:#22c55d;
+  color:#fff;
+}
+
+/* Cart Popup */
+.cart-popup{
+  display:none;
+  position:fixed;
+  top:80px;
+  right:5%;
+  width:350px;
+  max-height:500px;
+  background:rgba(0,0,0,0.95);
+  backdrop-filter: blur(20px);
+  border:2px solid rgba(255,255,255,0.3);
+  border-radius:15px;
+  padding:20px;
+  color:#fff;
+  z-index:999;
+  overflow-y:auto;
+  box-shadow:0 10px 40px rgba(0,0,0,0.5);
+}
+
+.cart-popup.active{
+  display:block;
+}
+
+.cart-item{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+  padding-bottom:15px;
+  border-bottom:1px solid rgba(255,255,255,0.2);
+}
+
+.cart-item img{
+  width:60px;
+  height:60px;
+  border-radius:8px;
+  object-fit:cover;
+}
+
+.cart-item-info{
+  flex:1;
+}
+
+.remove-btn{
+  background:#ff444d;
+  color:#fff;
+  border:none;
+  padding:4px 8px;
+  border-radius:5px;
+  font-size:12px;
+  cursor:pointer;
+  margin-top:5px;
+}
+
+.checkout-btn{
+  width:100%;
+  padding:14px;
+  background:#22c55d;
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  font-weight:700;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:15px;
+}
+
+.close-cart{
+  float:right;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+}
+
+@media(max-width:768px){
+  .header{flex-direction:column;align-items:center;}
+  nav{gap:15px;justify-content:center;}
+  .cart-popup{right:2%;left:2%;width:auto;}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo"><i class="fa-solid fa-leaf"></i> Arewa Herbal Mix</div>
+  <nav>
+    <div>Home</div>
+    <div onclick="window.location.href='contact.html'">Contact</div>
+    <div onclick="toggleCart()"><i class="fa-solid fa-cart-shopping"></i> Cart <span class="cart-count" id="cartCount">0</span></div>
+    <div onclick="logout()">Logout</div>
+    <span class="welcome">Hi, <span id="username">User</span></span>
+  </nav>
+</header>
+
+<!-- Cart Popup -->
+<div class="cart-popup" id="cartPopup">
+  <button class="close-cart" onclick="toggleCart()">&times;</button>
+  <h3 style="margin-bottom:15px;">Your Cart <i class="fa-solid fa-cart-shopping"></i></h3>
+  <div id="cartItems">Cart is empty</div>
+  <button class="checkout-btn" onclick="checkout()"><i class="fa-brands fa-whatsapp"></i> Checkout via WhatsApp</button>
+</div>
+
+<div class="container">
+  <h2>Our Herbal Products</h2>
+  <div class="product-grid" id="productGrid"></div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+let user = params.get('user') || localStorage.getItem('user') || 'User';
+document.getElementById('username').innerText = user;
+
+// Load cart from localStorage
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+const products = [
+  {name: 'Immune Boost Mix', price: 3500, img: 'https://images.unsplash.com/photo-1607613009820-a29fd7d1d2df4?auto=format&fit=crop&w=400&q=80'},
+  {name: 'Stomach Care Herbs', price: 2800, img: 'https://images.unsplash.com/photo-159975862268d-5eaa0c8a8a9f?auto=format&fit=crop&w=400&q=80'},
+  {name: 'Energy & Vitality Mix', price: 4200, img: 'https://images.unsplash.com/photo-1544367567-0fd2fcb009e0b?auto=format&fit=crop&w=400&q=80'},
+  {name: 'Blood Pressure Care', price: 3800, img: 'https://images.unsplash.com/photo-1470499862823-932ae27cf3f3?auto=format&fit=crop&w=400&q=80'}
+];
+
+function updateCartCount(){
+  let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+  document.getElementById('cartCount').innerText = totalQty;
+}
+
+function addToCart(product){
+  let existing = cart.find(item => item.name === product.name);
+  if(existing){
+    existing.qty += 1;
+  } else {
+    cart.push({...product, qty: 1});
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+  alert(product.name + ' added to cart!');
+}
+
+function toggleCart(){
+  document.getElementById('cartPopup').classList.toggle('active');
+  displayCart();
+}
+
+function displayCart(){
+  let cartDiv = document.getElementById('cartItems');
+  if(cart.length === 0){
+    cartDiv.innerHTML = '<p style="text-align:center;opacity:0.7">Cart is empty</p>';
+    return;
+  }
+  
+  let total = 0;
+  cartDiv.innerHTML = cart.map((item, index) => {
+    total += item.price * item.qty;
+    return `
+      <div class="cart-item">
+        <img src="${item.img}" alt="${item.name}">
+        <div class="cart-item-info">
+          <strong>${item.name}</strong><br>
+          ₦${item.price} x ${item.qty} = ₦${item.price * item.qty}<br>
+          <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+        </,div>
+      </div>
+    `;
+  }).join('') + `<h4 style="margin-top:15px;text-align:right">Total: ₦${total}</h4>`;
+}
+
+function removeFromCart(index){
+  cart.splice(index, 1);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+  displayCart();
+}
+
+function checkout(){
+  if(cart.length === 0){
+    alert('Cart is empty!');
+    return;
+  }
+  
+  let message = `Order from ${user}%0A%0A`;
+  cart.forEach(item => {
+    message += `${item.name} - ₦${item.price} x ${item.qty} = ₦${item.price * item.qty}%0A`;
+  });
+  let total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  message += `%0A%0ATotal: ₦${total}%0A%0ADelivery address: `;
+  
+  // Replace with your WhatsApp number: 234 + number without 0
+  window.open(`https://wa.me/2348012345678?text=${message}`, '_blank');
+}
+
+window.onload = function(){
+  updateCartCount();
+  let grid = document.getElementById('productGrid');
+  grid.innerHTML = '';
+  
+  products.forEach(p => {
+    let url = `product.html?name=${encodeURIComponent(p.name)}&price=${p.price}&img=${encodeURIComponent(p.img)}`;
+    
+    let card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.name}">
+      <h3>${p.name}</h3>
+      <p class="price">₦${p.price}</p>
+      <div class="btn-group">
+        <button class="btn btn-details" onclick="window.location.href='${url}'">View Details</button>
+        <button class="btn btn-cart" onclick='addToCart(${JSON.stringify(p)})'><i class="fa-solid fa-cart-plus"></i> Add</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function logout(){
+  localStorage.removeItem('user');
+  localStorage.removeItem('cart');
+  window.location.href = 'index.html';
+}
+</script>
+
+</body>
+</html>

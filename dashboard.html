@@ -279,9 +279,9 @@ document.getElementById('username').innerText = user;
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 const products = [
-  {name: 'Immune Boost Mix', price: 3500, img: 'https://images.unsplash.com/photo-1607613009820-a29fd7d1d2df4?auto=format&fit=crop&w=400&q=80'},
-  {name: 'Stomach Care Herbs', price: 2800, img: 'https://images.unsplash.com/photo-159975862268d-5eaa0c8a8a9f?auto=format&fit=crop&w=400&q=80'},
-  {name: 'Energy & Vitality Mix', price: 4200, img: 'https://images.unsplash.com/photo-1544367567-0fd2fcb009e0b?auto=format&fit=crop&w=400&q=80'},
+  {name: 'Immune Boost Mix', price: 3500, img: 'picture1.jpg'},
+  {name: 'Stomach Care Herbs', price: 2800, img: 'picture1.jpg'},
+  {name: 'Energy & Vitality Mix', price: 4200, img: 'picture1.jpg'},
   {name: 'Blood Pressure Care', price: 3800, img: 'https://images.unsplash.com/photo-1470499862823-932ae27cf3f3?auto=format&fit=crop&w=400&q=80'}
 ];
 
@@ -351,7 +351,7 @@ function checkout(){
   message += `%0A%0ATotal: ₦${total}%0A%0ADelivery address: `;
   
   // Replace with your WhatsApp number: 234 + number without 0
-  window.open(`https://wa.me/2348012345678?text=${message}`, '_blank');
+  window.open(`https://wa.me/2349024572231?text=${message}`, '_blank');
 }
 
 window.onload = function(){
